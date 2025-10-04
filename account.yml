@@ -21,8 +21,6 @@ spring:
         default_schema: ${account.config.database.schema}
     hibernate:
       ddl-auto: validate
-  config:
-    import: "optional:configserver:http://localhost:8888"
 
 eureka:
   instance:
