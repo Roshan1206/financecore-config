@@ -1,0 +1,38 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+customer:
+  config:
+    database:
+      schema: fc_customer
+    file:
+      upload-dir: uploads
+
+spring:
+  application:
+    name: customer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finance_core?currentSchema=${customer.config.database.schema}
+    username: postgres
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${customer.config.database.schema}
+    hibernate:
+      ddl-auto: validate
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+
