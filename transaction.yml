@@ -35,6 +35,7 @@ spring:
             client_secret: ${transaction.config.auth.client.secret}
             authorization-grant-type: client_credentials
             scopes: service.read,service.write,internal.api
+            provider: auth-server
         provider:
           auth-server:
             token-uri: ${transaction.config.auth.url}/oauth2/token
