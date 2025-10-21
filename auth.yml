@@ -7,14 +7,17 @@ auth:
   config:
     database:
       schema: fc_auth
-    issuer:
+    auth:
       url: http://localhost:${server.port}
+      client:
+        id: auth-server
+        secret: auth-secret
 
 spring:
   application:
     name: auth
   datasource:
-    url: jdbc:postgres:http://localhost:5432/finance_core?currentSchema=${auth.config.database.schema}
+    url: jdbc:postgresql://localhost:5432/finance_core?currentSchema=${auth.config.database.schema}
     username: postgres
     password: password
   jpa:
@@ -23,6 +26,10 @@ spring:
         default_schema: ${auth.config.database.schema}
     hibernate:
       ddl-auto: validate
+  security:
+    user:
+      name: fincancecore
+      password: password
 
 eureka:
   instance:
@@ -32,3 +39,9 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

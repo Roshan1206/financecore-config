@@ -7,6 +7,11 @@ account:
   config:
     database:
       schema: fc_account
+    auth:
+      url: http://localhost:8090
+      client:
+        id: account-service
+        secret: account-secret
 
 spring:
   application:
@@ -19,8 +24,30 @@ spring:
     properties:
       hibernate:
         default_schema: ${account.config.database.schema}
+        format_sql: true
     hibernate:
       ddl-auto: validate
+    show-sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          customer-service:
+            client_id: ${account.config.auth.client.id}
+            client-secret: ${account.config.auth.client.secret}
+            authorization-grant-type: client_credentials
+            scopes: service.read,service.write,internal.api
+          transaction-service:
+            client_id: ${account.config.auth.client.id}
+            client_secret: ${account.config.auth.client.secret}
+            authorization-grant-type: client_credentials
+            scopes: service.read,service.write,internal.api
+        provider:
+          auth-server:
+            token-uri: ${account.config.auth.url}/oauth2/token
+    user:
+      name: financecore
+      password: password
 
 eureka:
   instance:
