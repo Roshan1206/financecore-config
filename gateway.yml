@@ -6,12 +6,19 @@ gateway:
     auth:
       url: http://localhost:8090
       client:
-        id: gateway-server
+        id: gateway-service
         secret: gateway-secret
 
 spring:
   application:
     name: gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              lower-case-service-id: true
   security:
     user:
       name: fincancecore
